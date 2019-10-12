@@ -4,11 +4,13 @@ import 'package:easyboot_router/easyboot_router.dart';
 import 'package:easyboot_router/src/route.dart';
 
 class Router {
+  /// 所有路由列表
   List<Route> routes = [];
 
+  /// 使用[HttpRequest]对象匹配路由
+  /// 如果能匹配上返回路由列表
   List<Route> matchRoutes(HttpRequest request) {
     List<Route> _routes = [];
-
     // 匹配路由
     routes.forEach((route) {
       if (route.hasMatch(request))  {
@@ -29,8 +31,20 @@ class Router {
     return this;
   }
 
+  /// 添加一个HTTP GET 请求
+  /// ```
+  /// get("/", (HttpRequest request) {
+  ///   request.response.close();
+  /// })
+  /// ```
   Router get(String path,handler(HttpRequest request)) => request(path, HttpMethod.GET, handler);
 
+  /// 添加一个HTTP POST 请求
+  /// ```
+  /// post("/", (HttpRequest request) {
+  ///   request.response.close();
+  /// })
+  /// ```
   Router post(String path,handler(HttpRequest request)) => request(path, HttpMethod.POST, handler);
 
   Router all(String path,handler(HttpRequest request)) => request(path, HttpMethod.ALL, handler);
@@ -59,6 +73,8 @@ class Router {
 
   Router view(String path,handler(HttpRequest request)) => request(path, HttpMethod.VIEW, handler);
 
+  /// 添加自定义路由
+  /// 使用[Route]类构建
   Router addRoute(Route route) {
     this.routes.add(route);
     return this;
@@ -69,6 +85,7 @@ class Router {
     return "Router {routes: $routes}";
   }
 
+  /// 转换json结果
   List<Route> toJson() {
     return routes;
   }

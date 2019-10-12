@@ -4,15 +4,15 @@ import 'package:easyboot_router/easyboot_router.dart';
 import 'package:path_to_regexp/path_to_regexp.dart';
 
 class Route {
-  /// 路径
+  /// 当前路由的路径
   final String path;
-  /// 请求方法
+  /// 当前路由的匹配方法
   final String method;
-  /// 路径正则
+  /// 路径解析正则表达式
   RegExp _regExp;
-  /// 路径正则参数
+  /// 路径匹配的正则参数列表
   final List<String> parameters;
-  /// 处理函数
+  /// 当前路由的处理函数
   Function handler;
   Route({
     this.path,
@@ -29,7 +29,7 @@ class Route {
     return _regExp.hasMatch(request.uri.path) && (method == HttpMethod.ALL || request.method == method);
   }
 
-  /// 是否包含处理方法
+  /// 检测是否包含处理方法
   bool get hasHandler => handler != null;
 
   /// 获取匹配的路径参数
@@ -41,4 +41,14 @@ class Route {
   String toString() {
     return "Route {path: $path, method: $method}";
   }
+
+  /// 转换为json结果
+  Map<String, dynamic> toJson() {
+    return {
+      "path": path,
+      "method": method,
+    };
+  }
 }
+
+
