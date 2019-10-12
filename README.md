@@ -9,6 +9,9 @@ import 'package:easyboot_router/easyboot_router.dart';
 
 main() {
   Router router = new Router();
+  router.get("/", (HttpRequest request) {
+      request.response.close();
+  });
 }
 ```
 
